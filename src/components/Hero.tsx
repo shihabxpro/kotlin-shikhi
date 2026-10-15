@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import CodeBlock from './CodeBlock';
+import { ArrowRight, Map } from 'lucide-react';
 
 interface HeroProps {
   onStartLearning?: () => void;
@@ -31,9 +31,6 @@ export default function Hero({ onStartLearning, onViewRoadmap }: HeroProps = {})
 
   return (
     <section className="relative">
-      {/* Top-right code snippet block: rotated 45 degrees, syntax highlighted, reduced opacity */}
-      <CodeBlock className="top-10 sm:top-6 right-0 sm:right-2" />
-
       {/* Badge */}
       <div className="mb-4 relative z-10">
         <span
@@ -49,7 +46,15 @@ export default function Hero({ onStartLearning, onViewRoadmap }: HeroProps = {})
       </div>
 
       {/* Headline with 'গল্পটা' in terracotta + hand-drawn wavy underline */}
-      <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--color-ink,#1C1A18)] leading-[1.3] tracking-tight mb-5 relative z-10">
+      <h1
+        className="text-3xl sm:text-5xl text-[var(--color-ink,#1C1A18)] mb-5 relative z-10"
+        style={{
+          fontFamily: 'var(--font-heading)',
+          fontWeight: 700,
+          letterSpacing: 0,
+          lineHeight: 1.35,
+        }}
+      >
         <span className="block">কোড শেখার</span>
         <span className="block">
           <span
@@ -96,24 +101,26 @@ export default function Hero({ onStartLearning, onViewRoadmap }: HeroProps = {})
         <button
           type="button"
           onClick={handleStartLearning}
-          className="flex-1 px-3 py-3.5 font-semibold text-[15px] whitespace-nowrap rounded hover:bg-[#2C2926] active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--topbar-bg,#F4EFE6)] transition-transform text-center cursor-pointer"
+          className="flex-1 px-2.5 sm:px-3 py-3.5 font-semibold text-[14px] sm:text-[15px] whitespace-nowrap rounded hover:bg-[#2C2926] active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--topbar-bg,#F4EFE6)] transition-transform flex items-center justify-center gap-2 cursor-pointer"
           style={{
             backgroundColor: 'var(--color-ink, #1C1A18)',
             color: 'var(--color-paper, #F4EFE6)',
           }}
         >
-          শেখা শুরু করুন
+          <span>শেখা শুরু করুন</span>
+          <ArrowRight size={18} strokeWidth={1.75} className="shrink-0" />
         </button>
         <button
           type="button"
           onClick={handleViewRoadmap}
-          className="flex-1 px-3 py-3.5 font-semibold text-[15px] whitespace-nowrap rounded hover:bg-[#1C1A18]/5 active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--topbar-bg,#F4EFE6)] transition-transform text-center cursor-pointer"
+          className="flex-1 px-2.5 sm:px-3 py-3.5 font-semibold text-[14px] sm:text-[15px] whitespace-nowrap rounded hover:bg-[#1C1A18]/5 active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--topbar-bg,#F4EFE6)] transition-transform flex items-center justify-center gap-2 cursor-pointer"
           style={{
             border: '1px solid var(--color-ink, #1C1A18)',
             color: 'var(--color-ink, #1C1A18)',
           }}
         >
-          রোডম্যাপ দেখুন
+          <Map size={18} strokeWidth={1.75} className="shrink-0" />
+          <span>রোডম্যাপ দেখুন</span>
         </button>
       </div>
     </section>

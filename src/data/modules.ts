@@ -27,7 +27,21 @@ export const MODULES_DATA: ModuleItem[] = [
     number: '০২',
     title: 'ভেরিয়েবল ও Data Type',
     description: 'তথ্য রাখা ও ব্যবহার',
-    lessonsCount: '১০',
+    lessonsCount: '১২',
+    lessonTitles: [
+      'ভেরিয়েবল কী',
+      'val ও var',
+      'ভেরিয়েবলের নামের নিয়ম',
+      'Data Type পরিচিতি',
+      'Type লেখার দুই উপায়',
+      'Int ও Long',
+      'Double ও Float',
+      'Arithmetic Operator',
+      'Boolean',
+      'Char ও String',
+      'String Template',
+      'Type Conversion',
+    ],
   },
   {
     id: 3,
@@ -97,3 +111,16 @@ export const FEATURE_ITEMS: FeatureItem[] = [
 ];
 
 export const BENGALI_DIGITS = ['০১', '০২', '০৩', '০৪', '০৫', '০৬', '০৭', '০৮', '০৯', '১০'];
+
+const BENGALI_NUMERALS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+
+export function toBengaliNumber(n: number): string {
+  const padded = n < 10 && n >= 0 ? `0${n}` : `${n}`;
+  return padded
+    .split('')
+    .map((ch) => {
+      const d = parseInt(ch, 10);
+      return !isNaN(d) && BENGALI_NUMERALS[d] !== undefined ? BENGALI_NUMERALS[d] : ch;
+    })
+    .join('');
+}

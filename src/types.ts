@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import type { ReactNode } from 'react';
+
 export type Block =
   | { type: 'heading'; text: string; icon?: 'phone' | 'server' | 'devices' }
   | { type: 'paragraph'; text: string }
@@ -23,6 +25,7 @@ export type Block =
 export interface Lesson {
   title: string;
   blocks: Block[];
+  minutes?: number;
 }
 
 export interface ModuleItem {
@@ -49,6 +52,14 @@ export interface GroupedListItem {
   description?: string;
   metaText?: string;
   badgeText?: string;
+  icon?: ReactNode;
   isClickable?: boolean;
   onClick?: () => void;
 }
+
+export type CurrentRoute =
+  | { type: 'home' }
+  | { type: 'module'; moduleId: number }
+  | { type: 'lesson'; moduleId: number; lessonId: number };
+
+export type TextSize = 'small' | 'medium' | 'large';

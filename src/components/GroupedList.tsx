@@ -9,9 +9,14 @@ import { GroupedListItem } from '../types';
 interface GroupedListProps {
   items: GroupedListItem[];
   className?: string;
+  leadingSize?: number;
 }
 
-export default function GroupedList({ items, className = '' }: GroupedListProps) {
+export default function GroupedList({
+  items,
+  className = '',
+  leadingSize = 32,
+}: GroupedListProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasEntered, setHasEntered] = useState(false);
 
@@ -85,21 +90,27 @@ export default function GroupedList({ items, className = '' }: GroupedListProps)
           >
             {/* Vertically centered number circle + text block */}
             <div className="flex items-center gap-[14px] flex-1 min-w-0">
-              {/* Number circle: 32px, font-size 13px, font-weight 600, background rgba(184,92,62,0.07) */}
+              {/* Circle: dynamically sized, default 32px, 36px for Home modules */}
               <div
                 className="shrink-0 flex items-center justify-center font-semibold text-[var(--color-terracotta,#B85C3E)]"
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: `${leadingSize}px`,
+                  height: `${leadingSize}px`,
                   borderRadius: '50%',
                   backgroundColor: 'rgba(184, 92, 62, 0.07)',
                   fontSize: '13px',
                   lineHeight: 1,
                 }}
               >
-                <span className="tabular-nums relative -top-[1.5px] inline-block leading-none">
-                  {item.number}
-                </span>
+                {item.icon ? (
+                  <span className="flex items-center justify-center shrink-0">
+                    {item.icon}
+                  </span>
+                ) : (
+                  <span className="tabular-nums relative -top-[1.5px] inline-block leading-none">
+                    {item.number}
+                  </span>
+                )}
               </div>
 
               <div className="flex-1 min-w-0">

@@ -4,10 +4,12 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import MenuPanel from './components/MenuPanel';
 import Topbar from './components/Topbar';
 import Home from './pages/Home';
 import LessonPage from './pages/LessonPage';
 import ModulePage from './pages/ModulePage';
+import type { CurrentRoute, TextSize } from './types';
 
 type NavDirection = 'forward' | 'backward' | 'none';
 
@@ -16,6 +18,36 @@ export default function App() {
   const [isTopbarHidden, setIsTopbarHidden] = useState(false);
   const [transitionDirection, setTransitionDirection] = useState<NavDirection>('none');
   const [transitionKey, setTransitionKey] = useState(0);
+
+  // Menu state and text size state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMenuOpenRef = useRef(false);
+  const menuOpenScrollYRef = useRef(0);
+
+  const [textSize, setTextSize] = useState<TextSize>(() => {
+    try {
+      const saved = localStorage.getItem('kotlin_shikhi_text_size');
+      if (saved === 'small' || saved === 'medium' || saved === 'large') {
+        return saved;
+      }
+    } catch {
+      // fallback
+    }
+    return 'medium';
+  });
+
+  const handleTextSizeChange = (newSize: TextSize) => {
+    setTextSize(newSize);
+    try {
+      localStorage.setItem('kotlin_shikhi_text_size', newSize);
+    } catch {
+      // fallback
+    }
+  };
+
+  useEffect(() => {
+    isMenuOpenRef.current = isMenuOpen;
+  }, [isMenuOpen]);
 
   // Per-route scroll position tracking map
   const scrollPositionsRef = useRef<Record<string, number>>({});
@@ -46,6 +78,9 @@ export default function App() {
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
       const nextHash = window.location.hash || '';
+
+      // Close menu on popstate/route change
+      setIsMenuOpen(false);
 
       // If the hash didn't change (e.g. bottom sheet modal pushState/popstate), don't trigger page transition
       if (nextHash === activeHashRef.current) {
@@ -80,7 +115,7 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Topbar scroll show/hide behavior
+  // Topbar scroll show/hide & menu close on >10px scroll
   useEffect(() => {
     let ticking = false;
 
@@ -94,15 +129,24 @@ export default function App() {
           // Always record current scroll position for the current route
           scrollPositionsRef.current[activeHashRef.current] = currentY;
 
-          // If near the top (under ~24px), always show topbar
-          if (currentY <= 24) {
+          if (isMenuOpenRef.current) {
+            // Keep topbar visible while menu is open
             setIsTopbarHidden(false);
-          } else if (diff > 12) {
-            // Scrolled down more than ~12px -> slide up out of view
-            setIsTopbarHidden(true);
-          } else if (diff < -4) {
-            // Scrolled up even slightly -> slide back in
-            setIsTopbarHidden(false);
+            // Close menu if user scrolls more than 10px
+            if (Math.abs(currentY - menuOpenScrollYRef.current) > 10) {
+              setIsMenuOpen(false);
+            }
+          } else {
+            // If near the top (under ~24px), always show topbar
+            if (currentY <= 24) {
+              setIsTopbarHidden(false);
+            } else if (diff > 12) {
+              // Scrolled down more than ~12px -> slide up out of view
+              setIsTopbarHidden(true);
+            } else if (diff < -4) {
+              // Scrolled up even slightly -> slide back in
+              setIsTopbarHidden(false);
+            }
           }
 
           lastScrollYRef.current = currentY;
@@ -116,7 +160,21 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close menu on Escape key press
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuOpen]);
+
   const navigateForward = (targetHash: string) => {
+    setIsMenuOpen(false);
+
     // 1. Save current scroll before navigating
     scrollPositionsRef.current[activeHashRef.current] = window.scrollY;
 
@@ -141,6 +199,8 @@ export default function App() {
   };
 
   const navigateBackward = (targetHash: string, restoreScroll: boolean = false) => {
+    setIsMenuOpen(false);
+
     // 1. Save current scroll before navigating
     scrollPositionsRef.current[activeHashRef.current] = window.scrollY;
 
@@ -189,6 +249,52 @@ export default function App() {
     navigateForward('');
   };
 
+  // Derive current route
+  const currentRoute: CurrentRoute = (() => {
+    const lessonMatch = currentHash.match(/^#\/module\/(\d+)\/lesson\/(\d+)$/);
+    if (lessonMatch) {
+      return {
+        type: 'lesson',
+        moduleId: parseInt(lessonMatch[1], 10),
+        lessonId: parseInt(lessonMatch[2], 10),
+      };
+    }
+    const moduleMatch = currentHash.match(/^#\/module\/(\d+)$/);
+    if (moduleMatch) {
+      return {
+        type: 'module',
+        moduleId: parseInt(moduleMatch[1], 10),
+      };
+    }
+    return { type: 'home' };
+  })();
+
+  const handleMenuNavigateHome = () => {
+    setIsMenuOpen(false);
+    navigateHome();
+  };
+
+  const handleMenuNavigateModules = () => {
+    setIsMenuOpen(false);
+    if (currentHash === '') {
+      document.getElementById('modules-section')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigateForward('');
+      setTimeout(() => {
+        document.getElementById('modules-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
+
+  const handleMenuNavigateLessonList = (moduleId: number) => {
+    setIsMenuOpen(false);
+    navigateToModule(moduleId);
+  };
+
+  const handleNextModule = (nextModId: number) => {
+    navigateToModule(nextModId);
+  };
+
   // Route matching
   const renderRoute = () => {
     // Match lesson route: #/module/:moduleId/lesson/:lessonId
@@ -200,9 +306,11 @@ export default function App() {
         <LessonPage
           moduleId={moduleId}
           lessonId={lessonId}
+          textSize={textSize}
           onNextLesson={(nextId) => navigateToLesson(moduleId, nextId)}
           onPrevLesson={(prevId) => navigateToPrevLesson(moduleId, prevId)}
-          onLessonList={() => navigateBackToModule(moduleId)}
+          onNextModule={handleNextModule}
+          onViewAllModules={handleMenuNavigateModules}
         />
       );
     }
@@ -235,13 +343,40 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-[var(--topbar-bg,#F4EFE6)] overflow-x-hidden">
       {/* Fixed topbar: stays completely still, translateY transition only on scroll */}
-      <Topbar onHomeClick={navigateHome} isHidden={isTopbarHidden} />
+      <Topbar
+        onHomeClick={navigateHome}
+        isHidden={isTopbarHidden && !isMenuOpen}
+        isMenuOpen={isMenuOpen}
+        onToggleMenu={() => {
+          if (!isMenuOpen) {
+            menuOpenScrollYRef.current = window.scrollY;
+            setIsTopbarHidden(false);
+            setIsMenuOpen(true);
+          } else {
+            setIsMenuOpen(false);
+          }
+        }}
+        currentRoute={currentRoute}
+      />
+
+      {/* MenuPanel dropdown below topbar */}
+      <MenuPanel
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        currentRoute={currentRoute}
+        onNavigateHome={handleMenuNavigateHome}
+        onNavigateModules={handleMenuNavigateModules}
+        onNavigateLessonList={handleMenuNavigateLessonList}
+        textSize={textSize}
+        onTextSizeChange={handleTextSizeChange}
+      />
 
       {/* Main Layout Container with dot texture; pt-14 ensures content is not hidden under the topbar */}
       <div className="paper-dot-pattern flex-1 flex flex-col justify-between pt-14" style={{ overflowX: 'clip' }}>
         <main
           key={transitionKey}
-          className={`flex-1 ${maxWidthClass} w-full mx-auto px-5 sm:px-6 flex flex-col justify-between pt-6 pb-8 sm:pb-12 ${animationClass}`}
+          className={`flex-1 ${maxWidthClass} w-full mx-auto px-5 sm:px-6 flex flex-col justify-between pt-6 pb-8 ${animationClass}`}
+          style={{ paddingBottom: 'calc(2rem + env(safe-area-inset-bottom, 0px))' }}
         >
           {renderRoute()}
         </main>

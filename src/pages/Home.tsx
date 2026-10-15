@@ -30,7 +30,7 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
   };
 
   const groupedModules: GroupedListItem[] = MODULES_DATA.map((module) => {
-    const isClickable = module.id === 1;
+    const isClickable = Boolean(module.lessonTitles?.length);
 
     return {
       id: module.id,
@@ -67,7 +67,7 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
           className="mb-5"
         />
 
-        <GroupedList items={groupedModules} />
+        <GroupedList items={groupedModules} leadingSize={32} />
       </section>
     </>
   );

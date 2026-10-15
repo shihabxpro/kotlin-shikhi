@@ -5,7 +5,8 @@
 
 import GroupedList from '../components/GroupedList';
 import SectionHeader from '../components/SectionHeader';
-import { BENGALI_DIGITS, MODULES_DATA } from '../data/modules';
+import { getLessonContent } from '../content/lessons';
+import { MODULES_DATA, toBengaliNumber } from '../data/modules';
 import { GroupedListItem } from '../types';
 
 interface ModulePageProps {
@@ -18,12 +19,11 @@ export default function ModulePage({ moduleId, onSelectLesson }: ModulePageProps
 
   const lessonItems: GroupedListItem[] = (currentModule.lessonTitles || []).map((title, idx) => {
     const lessonId = idx + 1;
-    // For Module 1, all lessons 1-7 are clickable
-    const isClickable = moduleId === 1 && (lessonId >= 1 && lessonId <= 7);
+    const isClickable = Boolean(getLessonContent(moduleId, lessonId));
 
     return {
       id: idx,
-      number: BENGALI_DIGITS[idx] || `${lessonId}`,
+      number: toBengaliNumber(lessonId),
       title,
       isClickable,
       onClick: () => {

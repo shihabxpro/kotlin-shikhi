@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Fonts */
+    --font-site: "Anek Bangla", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Spacing */
+    --hero-gap: 28px;
+
+    /* Colors */
+    --color-paper: #F4EFE6;
+    --color-ink: #1C1A18;
+    --color-muted: #5F564D;
+    --color-muted-light: #8A7F72;
+    --color-muted-chevron: #A39888;
+    --color-terracotta: #B85C3E;
+    --color-border: #DED4C5;
+    --color-border-subtle: #DCD2C3;
+    --color-divider: #E6DDD0;
+
+    /* Code Syntax Colors */
+    --color-code-string: #2D6A4F;
+    --color-code-fn: #2B5B84;
+    --color-code-builtin: #9C4221;
+
+    /* Surface & Component Backgrounds */
+    --topbar-bg: #F4EFE6;
+    --row-bg: #F0EADF;
+    --row-border: #DED4C5;
+    --row-muted: #5A5047;
+  }
+
+  body {
+    font-family: var(--font-site);
+    background-color: var(--topbar-bg);
+    color: var(--color-ink);
+    line-height: 1.8;
+    min-height: 100vh;
+    margin: 0;
+  }
+}
+
+.paper-dot-pattern {
+  background-image: radial-gradient(rgba(28, 26, 24, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Page transitions */
+@keyframes view-enter-forward {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes view-enter-backward {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter-forward {
+    animation: view-enter-forward 220ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    will-change: opacity, transform;
+  }
+
+  .page-enter-backward {
+    animation: view-enter-backward 220ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    will-change: opacity, transform;
+  }
+}
+

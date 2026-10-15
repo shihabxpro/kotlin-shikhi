@@ -1,0 +1,6 @@
+{
+  "name": "Kotlin শিখি",
+  "description": "একটি করে ধারণা শিখুন, উদাহরণ বুঝুন, নিজের হাতে কোড লিখুন। শুরু থেকে ধাপে ধাপে Kotlin শেখার জন্য একটি সম্পূর্ণ বাংলা গাইড।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

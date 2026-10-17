@@ -3,6 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import {
+  Boxes,
+  Code2,
+  Database,
+  GitBranch,
+  Layers,
+  ShieldCheck,
+  Timer,
+  Workflow,
+  type LucideIcon,
+} from 'lucide-react';
 import FeatureCarousel from '../components/FeatureCarousel';
 import GroupedList from '../components/GroupedList';
 import Hero from '../components/Hero';
@@ -10,6 +21,17 @@ import SectionHeader from '../components/SectionHeader';
 import StatsStrip from '../components/StatsStrip';
 import { FEATURE_ITEMS, MODULES_DATA } from '../data/modules';
 import { GroupedListItem } from '../types';
+
+const MODULE_ICONS: Record<number, LucideIcon> = {
+  1: Code2,
+  2: Database,
+  3: GitBranch,
+  4: Workflow,
+  5: Boxes,
+  6: Layers,
+  7: ShieldCheck,
+  8: Timer,
+};
 
 interface HomeProps {
   onSelectModule: (moduleId: number) => void;
@@ -31,6 +53,7 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
 
   const groupedModules: GroupedListItem[] = MODULES_DATA.map((module) => {
     const isClickable = Boolean(module.lessonTitles?.length);
+    const Icon = MODULE_ICONS[module.id];
 
     return {
       id: module.id,
@@ -38,6 +61,7 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
       title: module.title,
       description: module.description,
       badgeText: `${module.lessonsCount} লেসন`,
+      icon: Icon ? <Icon size={18} strokeWidth={1.75} aria-hidden="true" /> : undefined,
       isClickable,
       onClick: () => {
         if (isClickable) {
@@ -67,7 +91,7 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
           className="mb-5"
         />
 
-        <GroupedList items={groupedModules} leadingSize={32} />
+        <GroupedList items={groupedModules} leadingSize={38} />
       </section>
     </>
   );

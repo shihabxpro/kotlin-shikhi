@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import MenuPanel from './components/MenuPanel';
 import Topbar from './components/Topbar';
+import { useReadProgress } from './hooks/useReadProgress';
+import About from './pages/About';
 import Home from './pages/Home';
 import LessonPage from './pages/LessonPage';
 import ModulePage from './pages/ModulePage';
 import type { CurrentRoute, TextSize } from './types';
+import { markLessonRead } from './utils/progress';
 
 type NavDirection = 'forward' | 'backward' | 'none';
 
@@ -23,6 +26,15 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMenuOpenRef = useRef(false);
   const menuOpenScrollYRef = useRef(0);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const readLessons = useReadProgress();
+
+  const closeMenu = useCallback((restoreFocus = true) => {
+    setIsMenuOpen(false);
+    if (restoreFocus) {
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    }
+  }, []);
 
   const [textSize, setTextSize] = useState<TextSize>(() => {
     try {
@@ -48,6 +60,14 @@ export default function App() {
   useEffect(() => {
     isMenuOpenRef.current = isMenuOpen;
   }, [isMenuOpen]);
+
+  // Track lessons the reader has opened (drives menu progress)
+  useEffect(() => {
+    const match = currentHash.match(/^#\/module\/(\d+)\/lesson\/(\d+)$/);
+    if (match) {
+      markLessonRead(parseInt(match[1], 10), parseInt(match[2], 10));
+    }
+  }, [currentHash]);
 
   // Per-route scroll position tracking map
   const scrollPositionsRef = useRef<Record<string, number>>({});
@@ -249,8 +269,16 @@ export default function App() {
     navigateForward('');
   };
 
+  const navigateToAbout = () => {
+    if (activeHashRef.current === '#/about') return;
+    navigateForward('#/about');
+  };
+
   // Derive current route
   const currentRoute: CurrentRoute = (() => {
+    if (currentHash === '#/about') {
+      return { type: 'about' };
+    }
     const lessonMatch = currentHash.match(/^#\/module\/(\d+)\/lesson\/(\d+)$/);
     if (lessonMatch) {
       return {
@@ -270,12 +298,12 @@ export default function App() {
   })();
 
   const handleMenuNavigateHome = () => {
-    setIsMenuOpen(false);
+    closeMenu(false);
     navigateHome();
   };
 
   const handleMenuNavigateModules = () => {
-    setIsMenuOpen(false);
+    closeMenu(false);
     if (currentHash === '') {
       document.getElementById('modules-section')?.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -286,8 +314,12 @@ export default function App() {
     }
   };
 
-  const handleMenuNavigateLessonList = (moduleId: number) => {
-    setIsMenuOpen(false);
+  const handleMenuNavigateModule = (moduleId: number) => {
+    closeMenu(false);
+    if (activeHashRef.current === `#/module/${moduleId}`) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     navigateToModule(moduleId);
   };
 
@@ -297,6 +329,11 @@ export default function App() {
 
   // Route matching
   const renderRoute = () => {
+    // About route
+    if (currentHash === '#/about') {
+      return <About onBack={navigateHome} />;
+    }
+
     // Match lesson route: #/module/:moduleId/lesson/:lessonId
     const lessonMatch = currentHash.match(/^#\/module\/(\d+)\/lesson\/(\d+)$/);
     if (lessonMatch) {
@@ -327,7 +364,13 @@ export default function App() {
       );
     }
 
-    return <Home onSelectModule={navigateToModule} isPaused={currentHash !== ''} />;
+    return (
+      <Home
+        onSelectModule={navigateToModule}
+        onOpenLesson={navigateToLesson}
+        isPaused={currentHash !== ''}
+      />
+    );
   };
 
   const animationClass =
@@ -353,22 +396,25 @@ export default function App() {
             setIsTopbarHidden(false);
             setIsMenuOpen(true);
           } else {
-            setIsMenuOpen(false);
+            closeMenu();
           }
         }}
         currentRoute={currentRoute}
+        menuButtonRef={menuButtonRef}
       />
 
-      {/* MenuPanel dropdown below topbar */}
+      {/* Side drawer menu */}
       <MenuPanel
         isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
+        onClose={closeMenu}
         currentRoute={currentRoute}
         onNavigateHome={handleMenuNavigateHome}
-        onNavigateModules={handleMenuNavigateModules}
-        onNavigateLessonList={handleMenuNavigateLessonList}
+        onNavigateModule={handleMenuNavigateModule}
+        onNavigateLesson={(moduleId, lessonId) => navigateToLesson(moduleId, lessonId)}
+        onNavigateAbout={navigateToAbout}
         textSize={textSize}
         onTextSizeChange={handleTextSizeChange}
+        readLessons={readLessons}
       />
 
       {/* Main Layout Container with dot texture; pt-14 ensures content is not hidden under the topbar */}

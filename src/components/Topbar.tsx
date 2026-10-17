@@ -4,6 +4,7 @@
  */
 
 import { Menu, X } from 'lucide-react';
+import type { RefObject } from 'react';
 import type { CurrentRoute } from '../types';
 
 interface TopbarProps {
@@ -12,6 +13,7 @@ interface TopbarProps {
   isMenuOpen?: boolean;
   onToggleMenu?: () => void;
   currentRoute?: CurrentRoute;
+  menuButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
 export default function Topbar({
@@ -19,6 +21,7 @@ export default function Topbar({
   isHidden = false,
   isMenuOpen = false,
   onToggleMenu,
+  menuButtonRef,
 }: TopbarProps) {
   return (
     <header
@@ -55,18 +58,29 @@ export default function Topbar({
 
         {/* Hamburger menu / Close toggle on the right */}
         <button
+          ref={menuButtonRef}
           type="button"
           onClick={onToggleMenu}
+          aria-haspopup="dialog"
           aria-expanded={isMenuOpen}
           aria-controls="menu-panel"
           aria-label={isMenuOpen ? 'মেনু বন্ধ করুন' : 'মেনু খুলুন'}
-          className="min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2 text-[var(--color-ink,#1C1A18)] hover:text-[var(--color-terracotta,#B85C3E)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] rounded transition-colors cursor-pointer"
+          className="relative min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2 text-[var(--color-ink,#1C1A18)] hover:text-[var(--color-terracotta,#B85C3E)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-terracotta,#B85C3E)] rounded transition-colors cursor-pointer"
         >
-          {isMenuOpen ? (
-            <X className="w-5 h-5" strokeWidth={2} aria-hidden="true" />
-          ) : (
-            <Menu className="w-5 h-5" strokeWidth={2} aria-hidden="true" />
-          )}
+          <Menu
+            className={`absolute w-5 h-5 transition-all duration-200 ease-out ${
+              isMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'
+            }`}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
+          <X
+            className={`absolute w-5 h-5 transition-all duration-200 ease-out ${
+              isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'
+            }`}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
         </button>
       </div>
     </header>

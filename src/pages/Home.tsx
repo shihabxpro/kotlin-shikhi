@@ -17,6 +17,7 @@ import {
 import FeatureCarousel from '../components/FeatureCarousel';
 import GroupedList from '../components/GroupedList';
 import Hero from '../components/Hero';
+import ProgressDashboard from '../components/ProgressDashboard';
 import SectionHeader from '../components/SectionHeader';
 import StatsStrip from '../components/StatsStrip';
 import { FEATURE_ITEMS, MODULES_DATA } from '../data/modules';
@@ -35,10 +36,11 @@ const MODULE_ICONS: Record<number, LucideIcon> = {
 
 interface HomeProps {
   onSelectModule: (moduleId: number) => void;
+  onOpenLesson: (moduleId: number, lessonId: number) => void;
   isPaused?: boolean;
 }
 
-export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
+export default function Home({ onSelectModule, onOpenLesson, isPaused = false }: HomeProps) {
   const handleStartLearning = () => {
     window.location.hash = '#/module/1/lesson/1';
     window.dispatchEvent(new PopStateEvent('popstate', { state: window.history.state }));
@@ -75,6 +77,9 @@ export default function Home({ onSelectModule, isPaused = false }: HomeProps) {
     <>
       {/* Hero section */}
       <Hero onStartLearning={handleStartLearning} onViewRoadmap={handleViewRoadmap} />
+
+      {/* Personal progress dashboard */}
+      <ProgressDashboard onOpenLesson={onOpenLesson} />
 
       {/* Stats strip */}
       <StatsStrip />

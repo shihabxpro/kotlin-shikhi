@@ -114,6 +114,19 @@ export const BENGALI_DIGITS = ['০১', '০২', '০৩', '০৪', '০৫',
 
 const BENGALI_NUMERALS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
+const BENGALI_DIGIT_MAP: Record<string, string> = {
+  '০': '0',
+  '১': '1',
+  '২': '2',
+  '৩': '3',
+  '৪': '4',
+  '৫': '5',
+  '৬': '6',
+  '৭': '7',
+  '৮': '8',
+  '৯': '9',
+};
+
 export function toBengaliNumber(n: number): string {
   const padded = n < 10 && n >= 0 ? `0${n}` : `${n}`;
   return padded
@@ -123,4 +136,24 @@ export function toBengaliNumber(n: number): string {
       return !isNaN(d) && BENGALI_NUMERALS[d] !== undefined ? BENGALI_NUMERALS[d] : ch;
     })
     .join('');
+}
+
+/** Convert a number to Bengali digits without zero-padding (e.g. 7 -> "৭"). */
+export function toBengaliDigits(n: number): string {
+  return String(n).replace(/\d/g, (d) => BENGALI_NUMERALS[Number(d)] ?? d);
+}
+
+/** Parse a Bengali-digit string back to a number (e.g. "১২" -> 12). */
+export function fromBengaliNumber(value: string): number {
+  const normalized = value.replace(/[০-৯]/g, (d) => BENGALI_DIGIT_MAP[d] ?? d);
+  const parsed = parseInt(normalized, 10);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+/** Total number of lessons a module exposes (prefers explicit titles, falls back to its count label). */
+export function getModuleLessonTotal(module: ModuleItem): number {
+  if (module.lessonTitles && module.lessonTitles.length > 0) {
+    return module.lessonTitles.length;
+  }
+  return fromBengaliNumber(module.lessonsCount);
 }

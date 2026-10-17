@@ -60,6 +60,7 @@ export interface GroupedListItem {
 export type CurrentRoute =
   | { type: 'home' }
   | { type: 'module'; moduleId: number }
-  | { type: 'lesson'; moduleId: number; lessonId: number };
+  | { type: 'lesson'; moduleId: number; lessonId: number }
+  | { type: 'about' };
 
 export type TextSize = 'small' | 'medium' | 'large';

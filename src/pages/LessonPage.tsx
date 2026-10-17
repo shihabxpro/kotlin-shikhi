@@ -20,9 +20,9 @@ interface LessonPageProps {
 }
 
 const ZOOM_LEVELS: Record<TextSize, number> = {
-  small: 0.92,
+  small: 0.9,
   medium: 1,
-  large: 1.12,
+  large: 1.18,
 };
 
 function countWords(str: string): number {

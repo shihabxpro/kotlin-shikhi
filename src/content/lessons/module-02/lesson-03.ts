@@ -157,7 +157,7 @@ val totalScore = 95`,
       ],
     },
     {
-      type: 'paragraph',
+      type: 'note',
       text: 'মনে রাখবে, `camelCase` একটি প্রচলিত রীতি, বাধ্যতামূলক নিয়ম নয়। এটি না মানলেও নামটি বৈধ হলে কোড চলতে পারে।',
     },
     {
@@ -208,10 +208,10 @@ val totalScore = 95`,
     {
       type: 'list',
       items: [
-        '**সংখ্যা দিয়ে শুরু করা:** `val 1stPlace = 5` — সঠিক: `val firstPlace = 5`',
-        '**নামের মাঝে ফাঁকা জায়গা দেওয়া:** `val my score = 10` — সঠিক: `val myScore = 10`',
-        '**হাইফেন ব্যবহার করা:** `val player-name = "সাকিব"` — সঠিক: `val playerName = "সাকিব"`',
-        '**কীওয়ার্ডকে নাম হিসেবে ব্যবহার করা:** `val class = 10` — সঠিক: `val classNumber = 10`',
+        '**সংখ্যা দিয়ে শুরু করা:**\nভুল: `val 1stPlace = 5`\nসঠিক: `val firstPlace = 5`',
+        '**নামের মাঝে ফাঁকা জায়গা দেওয়া:**\nভুল: `val my score = 10`\nসঠিক: `val myScore = 10`',
+        '**হাইফেন ব্যবহার করা:**\nভুল: `val player-name = "সাকিব"`\nসঠিক: `val playerName = "সাকিব"`',
+        '**কীওয়ার্ডকে নাম হিসেবে ব্যবহার করা:**\nভুল: `val class = 10`\nসঠিক: `val classNumber = 10`',
       ],
     },
     {

@@ -10,6 +10,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1C1A18)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white&labelColor=1C1A18)
 ![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=1C1A18)
+![License](https://img.shields.io/badge/License-Apache--2.0-A81C7D?style=for-the-badge&logo=apache&logoColor=white&labelColor=1C1A18)
 
 </div>
 

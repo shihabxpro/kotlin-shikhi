@@ -36,7 +36,7 @@ interface MenuPanelProps {
   readLessons?: Set<string>;
 }
 
-type SectionKey = 'modules' | 'lessons' | null;
+type SectionKey = 'lessons' | null;
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -99,7 +99,10 @@ export default function MenuPanel({
   const [openSection, setOpenSection] = useState<SectionKey>(null);
 
   const panelRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const swipeStartXRef = useRef<number | null>(null);
+  const swipeStartYRef = useRef<number | null>(null);
+  const swipeAxisRef = useRef<'none' | 'x' | 'y'>('none');
   const swipeDeltaRef = useRef(0);
 
   // Mount/unmount + slide-in animation
@@ -123,11 +126,24 @@ export default function MenuPanel({
   // Auto-open the relevant section when the drawer opens
   useEffect(() => {
     if (!isOpen) return;
-    if (currentRoute.type === 'lesson') setOpenSection('lessons');
-    else if (currentRoute.type === 'module') setOpenSection('modules');
+    if (currentRoute.type === 'lesson' || currentRoute.type === 'module')
+      setOpenSection('lessons');
     else setOpenSection(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  // Bring the active lesson into view as soon as the drawer opens
+  useEffect(() => {
+    if (!isOpen || !isMounted || openSection !== 'lessons') return;
+    const nav = navRef.current;
+    if (!nav) return;
+    const target = nav.querySelector<HTMLElement>('#menu-active-lesson');
+    if (!target) return;
+    const frame = requestAnimationFrame(() => {
+      target.scrollIntoView({ block: 'center', inline: 'nearest' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [isOpen, isMounted, openSection]);
 
   // Lock background scroll while open
   useEffect(() => {
@@ -259,28 +275,95 @@ export default function MenuPanel({
     return items;
   }, []);
 
+  // Lessons grouped under their module, together with per-module progress
+  const lessonGroups = useMemo(
+    () =>
+      MODULES_DATA.map((module) => {
+        const total = getModuleLessonTotal(module);
+        const readCount = readLessons
+          ? countReadLessons(readLessons, module.id, total)
+          : 0;
+        return {
+          moduleId: module.id,
+          number: module.number,
+          title: module.title,
+          total,
+          readCount,
+          lessons: lessonItems.filter((lesson) => lesson.moduleId === module.id),
+        };
+      }),
+    [lessonItems, readLessons]
+  );
+
+  const renderLessonRow = (
+    lesson: (typeof lessonItems)[number],
+    index: number
+  ) => {
+    const isActive =
+      isLesson &&
+      currentRoute.moduleId === lesson.moduleId &&
+      currentRoute.lessonId === lesson.lessonId;
+    return (
+      <MenuRow
+        key={`${lesson.moduleId}-${lesson.lessonId}`}
+        id={isActive ? 'menu-active-lesson' : undefined}
+        icon={<BookOpen size={17} strokeWidth={1.9} aria-hidden="true" />}
+        title={lesson.title}
+        active={isActive}
+        onClick={() => {
+          onClose();
+          onNavigateLesson?.(lesson.moduleId, lesson.lessonId);
+        }}
+        style={reveal(index, 20)}
+        trailing={
+          <ChevronRight
+            size={16}
+            strokeWidth={2}
+            className="text-[var(--color-muted-chevron,#A39888)]"
+            aria-hidden="true"
+          />
+        }
+      />
+    );
+  };
+
   // ---- Swipe (drag right) to close ----
   const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
     swipeStartXRef.current = event.touches[0].clientX;
+    swipeStartYRef.current = event.touches[0].clientY;
+    swipeAxisRef.current = 'none';
     swipeDeltaRef.current = 0;
   };
 
   const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
     if (swipeStartXRef.current === null) return;
-    const delta = event.touches[0].clientX - swipeStartXRef.current;
-    if (delta <= 0) return;
-    swipeDeltaRef.current = delta;
+    const dx = event.touches[0].clientX - swipeStartXRef.current;
+    const dy = event.touches[0].clientY - (swipeStartYRef.current ?? 0);
+
+    // Decide once per gesture whether this is a horizontal swipe or a vertical scroll.
+    if (swipeAxisRef.current === 'none') {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      swipeAxisRef.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+
+    // Vertical scrolling (or leftward drags) must not move/close the drawer.
+    if (swipeAxisRef.current !== 'x' || dx <= 0) return;
+
+    swipeDeltaRef.current = dx;
     const panel = panelRef.current;
-    if (panel) panel.style.transform = `translateX(${delta}px)`;
+    if (panel) panel.style.transform = `translateX(${dx}px)`;
   };
 
   const handleTouchEnd = () => {
     if (swipeStartXRef.current === null) return;
     swipeStartXRef.current = null;
+    swipeStartYRef.current = null;
+    const axis = swipeAxisRef.current;
+    swipeAxisRef.current = 'none';
     const panel = panelRef.current;
     const delta = swipeDeltaRef.current;
     swipeDeltaRef.current = 0;
-    if (!panel) return;
+    if (!panel || axis !== 'x') return;
     if (delta > 90) {
       panel.style.transform = '';
       onClose();
@@ -325,6 +408,7 @@ export default function MenuPanel({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         className="fixed top-0 right-0 z-50 h-full w-[86vw] max-w-[330px] flex flex-col bg-[var(--topbar-bg,#F4EFE6)] border-l border-[var(--color-border,#DED4C5)] shadow-2xl focus:outline-none"
         style={{
           transform: animateIn ? 'translateX(0)' : 'translateX(100%)',
@@ -360,7 +444,10 @@ export default function MenuPanel({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto overscroll-contain px-2.5 py-2">
+        <nav
+          ref={navRef}
+          className="flex-1 overflow-y-auto overscroll-contain px-2.5 py-2"
+        >
           <MenuSection>
             <MenuRow
               icon={<Home size={18} strokeWidth={1.9} aria-hidden="true" />}
@@ -385,96 +472,56 @@ export default function MenuPanel({
 
             <DisclosureHeader
               icon={<Layers size={18} strokeWidth={1.9} aria-hidden="true" />}
-              label="মডিউল"
-              open={openSection === 'modules'}
-              onClick={() =>
-                setOpenSection((prev) => (prev === 'modules' ? null : 'modules'))
-              }
-              style={reveal(1)}
-            />
-            {openSection === 'modules' && (
-              <div className="pl-3 space-y-1">
-                {MODULES_DATA.map((module, index) => {
-                  const isActive =
-                    (currentRoute.type === 'module' || currentRoute.type === 'lesson') &&
-                    currentRoute.moduleId === module.id;
-                  const total = getModuleLessonTotal(module);
-                  const readCount = readLessons
-                    ? countReadLessons(readLessons, module.id, total)
-                    : 0;
-                  const isComplete = total > 0 && readCount >= total;
-                  const progress = total > 0 ? readCount / total : 0;
-
-                  return (
-                    <MenuRow
-                      key={module.id}
-                      icon={module.number}
-                      title={module.title}
-                      active={isActive}
-                      accent
-                      progress={progress}
-                      onClick={() => {
-                        onClose();
-                        onNavigateModule?.(module.id);
-                      }}
-                      style={reveal(index, 20)}
-                      trailing={
-                        isComplete ? (
-                          <Check
-                            size={16}
-                            strokeWidth={2.4}
-                            className="text-[var(--color-terracotta,#B85C3E)]"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <span className="text-[11px] font-medium whitespace-nowrap px-2 py-0.5 rounded-full bg-[rgba(28,26,24,0.05)] text-[var(--color-muted-light,#8A7F72)]">
-                            {`${toBengaliDigits(readCount)}/${toBengaliDigits(total)}`}
-                          </span>
-                        )
-                      }
-                    />
-                  );
-                })}
-              </div>
-            )}
-
-            <DisclosureHeader
-              icon={<BookOpen size={18} strokeWidth={1.9} aria-hidden="true" />}
-              label="লেসন"
+              label="কোর্স"
               open={openSection === 'lessons'}
               onClick={() =>
                 setOpenSection((prev) => (prev === 'lessons' ? null : 'lessons'))
               }
-              style={reveal(2)}
+              style={reveal(1)}
             />
             {openSection === 'lessons' && (
               <div className="pl-3 space-y-1">
-                {lessonItems.map((lesson, index) => {
+                {lessonGroups.map((group, groupIndex) => {
                   const isActive =
-                    isLesson &&
-                    currentRoute.moduleId === lesson.moduleId &&
-                    currentRoute.lessonId === lesson.lessonId;
+                    (currentRoute.type === 'module' || currentRoute.type === 'lesson') &&
+                    currentRoute.moduleId === group.moduleId;
+                  const isComplete =
+                    group.total > 0 && group.readCount >= group.total;
+                  const progress =
+                    group.total > 0 ? group.readCount / group.total : 0;
+
                   return (
-                    <MenuRow
-                      key={`${lesson.moduleId}-${lesson.lessonId}`}
-                      icon={<BookOpen size={17} strokeWidth={1.9} aria-hidden="true" />}
-                      title={lesson.title}
-                      subtitle={lesson.moduleTitle}
-                      active={isActive}
-                      onClick={() => {
-                        onClose();
-                        onNavigateLesson?.(lesson.moduleId, lesson.lessonId);
-                      }}
-                      style={reveal(index, 20)}
-                      trailing={
-                        <ChevronRight
-                          size={16}
-                          strokeWidth={2}
-                          className="text-[var(--color-muted-chevron,#A39888)]"
-                          aria-hidden="true"
-                        />
-                      }
-                    />
+                    <div key={group.moduleId} className="space-y-1">
+                      <MenuRow
+                        icon={group.number}
+                        title={group.title}
+                        active={isActive}
+                        accent
+                        progress={progress}
+                        onClick={() => {
+                          onClose();
+                          onNavigateModule?.(group.moduleId);
+                        }}
+                        style={reveal(groupIndex, 20)}
+                        trailing={
+                          isComplete ? (
+                            <Check
+                              size={16}
+                              strokeWidth={2.4}
+                              className="text-[var(--color-terracotta,#B85C3E)]"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <span className="text-[11px] font-medium whitespace-nowrap px-2 py-0.5 rounded-full bg-[rgba(28,26,24,0.05)] text-[var(--color-muted-light,#8A7F72)]">
+                              {`${toBengaliDigits(group.readCount)}/${toBengaliDigits(group.total)}`}
+                            </span>
+                          )
+                        }
+                      />
+                      {group.lessons.map((lesson, lessonIndex) =>
+                        renderLessonRow(lesson, groupIndex + lessonIndex)
+                      )}
+                    </div>
                   );
                 })}
               </div>

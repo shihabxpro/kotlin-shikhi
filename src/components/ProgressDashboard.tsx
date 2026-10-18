@@ -3,38 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ArrowRight } from 'lucide-react';
 import { LESSONS_REGISTRY } from '../content/lessons';
 import { toBengaliDigits } from '../data/modules';
 import { useReadProgress } from '../hooks/useReadProgress';
-import { getLastLesson } from '../utils/progress';
-
-interface ProgressDashboardProps {
-  onOpenLesson: (moduleId: number, lessonId: number) => void;
-}
 
 const RING_RADIUS = 33;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
-export default function ProgressDashboard({ onOpenLesson }: ProgressDashboardProps) {
+export default function ProgressDashboard() {
   const read = useReadProgress();
   const allKeys = Object.keys(LESSONS_REGISTRY);
   const total = allKeys.length;
   const done = allKeys.filter((key) => read.has(key)).length;
   const percent = total > 0 ? Math.round((done / total) * 100) : 0;
-
-  const last = getLastLesson();
-  const hasLastContent = last
-    ? Boolean(LESSONS_REGISTRY[`${last.moduleId}-${last.lessonId}`])
-    : false;
-
-  const handleContinue = () => {
-    if (last && hasLastContent) {
-      onOpenLesson(last.moduleId, last.lessonId);
-    } else {
-      onOpenLesson(1, 1);
-    }
-  };
 
   return (
     <section
@@ -97,15 +78,6 @@ export default function ProgressDashboard({ onOpenLesson }: ProgressDashboardPro
           </div>
         </div>
       </div>
-
-      <button
-        type="button"
-        onClick={handleContinue}
-        className="mt-4 w-full min-h-[46px] flex items-center justify-center gap-2 rounded-xl bg-[var(--color-terracotta,#B85C3E)] text-[#F4EFE6] text-[15px] font-semibold transition-[filter] hover:brightness-105 active:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--topbar-bg,#F4EFE6)] focus-visible:ring-[var(--color-terracotta,#B85C3E)] cursor-pointer"
-      >
-        {done === 0 ? 'শেখা শুরু করুন' : 'যেখানে ছেড়েছিলেন, চালিয়ে যান'}
-        <ArrowRight size={17} strokeWidth={2.2} aria-hidden="true" />
-      </button>
     </section>
   );
 }

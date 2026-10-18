@@ -76,10 +76,14 @@ export default function Home({ onSelectModule, onOpenLesson, isPaused = false }:
   return (
     <>
       {/* Hero section */}
-      <Hero onStartLearning={handleStartLearning} onViewRoadmap={handleViewRoadmap} />
+      <Hero
+        onStartLearning={handleStartLearning}
+        onViewRoadmap={handleViewRoadmap}
+        onOpenLesson={onOpenLesson}
+      />
 
       {/* Personal progress dashboard */}
-      <ProgressDashboard onOpenLesson={onOpenLesson} />
+      <ProgressDashboard />
 
       {/* Stats strip */}
       <StatsStrip />

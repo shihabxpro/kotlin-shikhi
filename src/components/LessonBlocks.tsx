@@ -113,7 +113,7 @@ function ListBlock({ block }: { block: Extract<Block, { type: 'list' }> }) {
   );
 }
 
-function highlightKotlin(code: string): React.ReactNode {
+export function highlightKotlin(code: string): React.ReactNode {
   const tokenRegex = /(?:"(?:[^"\\]|\\.)*"|"""[\s\S]*?"""|\/\/.*|\/\*[\s\S]*?\*\/|\b(?:fun|val|var|class|object|interface|package|import|return|if|else|when|for|while|do|try|catch|finally|throw|true|false|null|is|in|as|override|private|public|protected|internal|companion|data|sealed|enum|open|abstract)\b|\b[a-zA-Z_][a-zA-Z0-9_]*(?=\s*\()|\b\d+(?:\.\d+)?\b)/g;
 
   const elements: React.ReactNode[] = [];

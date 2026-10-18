@@ -4,7 +4,7 @@
  */
 
 import { Sparkles } from 'lucide-react';
-import profileImage from '../assets/profile.png';
+import profileImage from '../assets/profile.webp';
 import SocialLinks from './SocialLinks';
 
 interface AboutHeroProps {
@@ -81,6 +81,7 @@ export default function AboutHero({
             alt={name}
             width={144}
             height={144}
+            loading="eager"
             decoding="async"
             className="absolute inset-[5px] h-[calc(100%-10px)] w-[calc(100%-10px)] rounded-full object-cover"
           />

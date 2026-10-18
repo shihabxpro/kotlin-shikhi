@@ -13,7 +13,7 @@ import {
   Send,
   type LucideIcon,
 } from 'lucide-react';
-import profileImage from '../assets/profile.png';
+import profileImage from '../assets/profile.webp';
 
 interface AboutPageProps {
   onBack: () => void;
@@ -70,6 +70,8 @@ export default function About(_props: AboutPageProps) {
           alt="শিহাব"
           width={176}
           height={176}
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
           className="absolute inset-[6px] h-[calc(100%-12px)] w-[calc(100%-12px)] rounded-full object-cover shadow-[0_10px_30px_-12px_rgba(28,26,24,0.6)]"
         />

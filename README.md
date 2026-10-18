@@ -1,74 +1,99 @@
+<div align="center">
+
 # Kotlin শিখি
 
-Learn Kotlin in Bangla — বাংলায় শুরু থেকে ধাপে ধাপে এবং কার্যকরভাবে Kotlin প্রোগ্রামিং শেখার ইন্টারঅ্যাক্টিভ প্ল্যাটফর্ম।
+### বাংলায় শুরু থেকে ধাপে ধাপে Kotlin শেখার ইন্টারঅ্যাকটিভ প্ল্যাটফর্ম
+
+একটি করে ধারণা শিখুন · উদাহরণ বুঝুন · নিজের হাতে কোড লিখুন
+
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=1C1A18)
+![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1C1A18)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white&labelColor=1C1A18)
+![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=1C1A18)
+
+</div>
 
 ---
 
-## বৈশিষ্ট্যসমূহ (Features)
+## এই প্রজেক্ট কী
 
-- **ধাপে ধাপে সাজানো লেসন (Step-by-step Lessons):** প্রাথমিক পরিচিতি থেকে শুরু করে মূল প্রোগ্রামিং ধারণাগুলো ক্রমানুসারে সাজানো।
-- **কোড উদাহরণ ও আউটপুট (Code Examples):** প্রতিটি ধারণার সাথে সুস্পষ্ট কোড স্নিপেট এবং প্রত্যাশিত আউটপুট।
-- **অনুশীলন ও কুইজ (Quizzes & Self-checks):** প্রতিটি লেসনের শেষে নিজে নিজে যাচাই করার জন্য ইন্টারঅ্যাক্টিভ কুইজ ও প্র্যাকটিস টাস্ক।
-- **পরিচ্ছন্ন ও রিডিং-বান্ধব ডিজাইন (Minimalist UI):** চোখের ওপর চাপ না ফেলে সহজে পড়ার উপযোগী বাংলা টাইপোগ্রাফি ও লেআউট।
+**Kotlin শিখি** হলো একটি সম্পূর্ণ বাংলা ভাষার ইন্টারঅ্যাকটিভ লার্নিং অ্যাপ, যেখানে Kotlin প্রোগ্রামিং একদম শুরু থেকে ধাপে ধাপে শেখানো হয়। প্রতিটি লেসন ছোট ছোট ধারণায় ভাগ করা — পড়ুন, কোড উদাহরণ বুঝুন, তারপর কুইজ ও প্র্যাকটিস টাস্ক দিয়ে নিজের বোঝাপড়া যাচাই করুন। কোনো পূর্ব অভিজ্ঞতার দরকার নেই।
 
 ---
 
-## টেক স্ট্যাক (Tech Stack)
+## বৈশিষ্ট্যসমূহ
 
-- **Frontend Framework:** React 19
+| | বৈশিষ্ট্য | বিবরণ |
+|---|-----------|--------|
+| 📚 | **ধাপে ধাপে রোডম্যাপ** | প্রাথমিক পরিচিতি থেকে Coroutine পর্যন্ত ক্রমানুসারে সাজানো মডিউল |
+| 💻 | **কোড ও আউটপুট** | প্রতিটি ধারণার সাথে পরিষ্কার কোড স্নিপেট এবং প্রত্যাশিত আউটপুট |
+| ✅ | **কুইজ ও সেলফ-চেক** | প্রতিটি লেসনের শেষে ইন্টারঅ্যাকটিভ কুইজ ও প্র্যাকটিস টাস্ক |
+| 📈 | **অগ্রগতি ড্যাশবোর্ড** | পড়ার অগ্রগতি স্বয়ংক্রিয়ভাবে সংরক্ষণ ও হোম পেজে প্রদর্শন |
+| 🎨 | **পড়ার উপযোগী ডিজাইন** | চোখের চাপ কমায় এমন বাংলা টাইপোগ্রাফি ও মিনিমাল UI |
+| 📱 | **রেসপন্সিভ** | মোবাইল, ট্যাব ও ডেস্কটপে সমান অভিজ্ঞতা |
+
+---
+
+## লার্নিং রোডম্যাপ
+
+| # | মডিউল | বিষয় |
+|---|--------|-------|
+| ০১ | **Kotlin পরিচিতি** | Kotlin কী, প্রথম প্রোগ্রাম, `main()`, `print()` / `println()`, Comments |
+| ০২ | **ভেরিয়েবল ও Data Type** | `val` ও `var`, Data Type, Operator, Boolean, String Template, Type Conversion |
+| ০৩ | **Condition ও Loop** | সিদ্ধান্ত নেওয়া ও পুনরাবৃত্তি |
+| ০৪ | **Function** | কোড ভেঙে ছোট অংশে সাজানো |
+| ০৫ | **Class ও Object** | বাস্তব জিনিসকে কোডে প্রকাশ |
+| ০৬ | **Collection ও Lambda** | ডেটার তালিকা নিয়ে কাজ |
+| ০৭ | **Null Safety** | Kotlin-এর ক্র্যাশ এড়ানোর কৌশল |
+| ০৮ | **Coroutine Basics** | একসাথে একাধিক কাজ সামলানো |
+
+> মডিউল ০১–০২ সম্পূর্ণ লাইভ, বাকিগুলো ক্রমান্বয়ে যুক্ত হচ্ছে।
+
+---
+
+## টেক স্ট্যাক
+
+- **Framework:** React 19
 - **Language:** TypeScript
 - **Build Tool:** Vite
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS v4
+- **Animation:** Motion
+- **Icons:** Lucide React
 
 ---
 
-## লোকাল মেশিনে চালানোর নিয়ম (Running Locally)
-
-প্রজেক্টটি ক্লোন করে আপনার লোকাল মেশিনে চালাতে নিচের কমান্ডগুলো রান করুন:
-
-1. ডিপেনডেন্সি ইনস্টল করুন:
-```bash
-npm install
-```
-
-2. ডেভেলপমেন্ট সার্ভার চালু করুন:
-```bash
-npm run dev
-```
-
-সার্ভার চালু হলে ব্রাউজারে `http://localhost:3000` ঠিকানায় যান।
-
----
-
-## প্রজেক্টের গঠন (Project Structure)
+## প্রজেক্টের গঠন
 
 ```text
-├── src/
-│   ├── components/         # পুনঃব্যবহারযোগ্য UI কম্পোনেন্ট (Topbar, LessonBlocks, QuizFlow ইত্যাদি)
-│   ├── content/
-│   │   └── lessons/        # মডিউল অনুযায়ী লেসনের কন্টেন্ট ফাইল (module-01, module-02 ইত্যাদি)
-│   ├── data/
-│   │   └── modules.ts      # মডিউল ও রোডম্যাপের ডেটা তালিকা
-│   ├── pages/              # হোম পেজ, মডিউল পেজ এবং লেসন ভিউ পেজ
-│   ├── types.ts            # গ্লোবাল টাইপ ডেফিনিশন (Block, Lesson, ModuleItem ইত্যাদি)
-│   ├── App.tsx             # মূল অ্যাপ ও রাউটিং লজিক
-│   └── main.tsx            # অ্যাপের এন্ট্রি পয়েন্ট
-├── package.json
-└── vite.config.ts
+src/
+├── components/     # পুনঃব্যবহারযোগ্য UI কম্পোনেন্ট (Topbar, LessonBlocks, QuizFlow...)
+├── content/
+│   └── lessons/    # মডিউল অনুযায়ী লেসন কন্টেন্ট (module-01, module-02...)
+├── data/
+│   └── modules.ts  # মডিউল ও রোডম্যাপ ডেটা
+├── hooks/          # কাস্টম React hooks (useReadProgress...)
+├── pages/          # Home, ModulePage, LessonPage, About
+├── utils/          # অগ্রগতি ট্র্যাকিং হেল্পার
+├── types.ts        # গ্লোবাল টাইপ ডেফিনিশন
+├── App.tsx         # মূল অ্যাপ ও রাউটিং
+└── main.tsx        # এন্ট্রি পয়েন্ট
 ```
 
 ---
 
-## নতুন লেসন যুক্ত করার নিয়ম (How to Add a Lesson)
+<div align="center">
 
-1. **লেসন ফাইল তৈরি:**  
-   `src/content/lessons/module-XX/` ফোল্ডারে নতুন ফাইল তৈরি করুন (যেমন: `lesson-08.ts`)।
+## যোগাযোগ
 
-2. **কন্টেন্ট সাজানো:**  
-   প্রয়োজন অনুযায়ী `paragraph`, `heading`, `code`, `note`, `task`, অথবা `quiz` ব্লক ব্যবহার করে কন্টেন্ট লিখুন।
+সমস্যা, পরামর্শ বা প্রশ্ন থাকলে সরাসরি বার্তা পাঠান।
 
-3. **ইনডেক্সে যুক্ত করা:**  
-   `src/content/lessons/index.ts` ফাইলে লেসনটি ইমপোর্ট করুন এবং `LESSONS_REGISTRY`-তে কি (Key) হিসেবে যুক্ত করুন (যেমন: `'1-8': lesson08`)।
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/muhammadshihabjht)
+[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/shihabxai)
 
-4. **মডিউল মেটাডেটা আপডেট:**  
-   `src/data/modules.ts`-এ মডিউলের `lessonTitles`-এ নতুন লেসনের নাম যোগ করুন এবং মডিউল পেজে প্রয়োজন হলে ক্লিকযোগ্য সীমা আপডেট করুন।
+---
+
+**Kotlin শিখি** — বাংলায় কোড শেখা হোক আরও সহজ।
+
+Licensed under the **Apache-2.0** License.
+
+</div>

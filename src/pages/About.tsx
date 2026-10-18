@@ -13,7 +13,7 @@ import {
   Send,
   type LucideIcon,
 } from 'lucide-react';
-import profileImage from '../assets/profile.jpg';
+import profileImage from '../assets/profile.png';
 
 interface AboutPageProps {
   onBack: () => void;
@@ -41,10 +41,10 @@ interface SocialLink {
 }
 
 const SOCIAL_LINKS: SocialLink[] = [
-  { name: 'Facebook', href: 'https://facebook.com/', Icon: Facebook },
-  { name: 'Telegram', href: 'https://t.me/', Icon: Send },
-  { name: 'GitHub', href: 'https://github.com/', Icon: Github },
-  { name: 'Email', href: 'mailto:hello@example.com', Icon: Mail },
+  { name: 'Facebook', href: 'https://www.facebook.com/muhammadshihabjht', Icon: Facebook },
+  { name: 'Telegram', href: 'https://t.me/shihabxai', Icon: Send },
+  { name: 'GitHub', href: 'https://github.com/shihabxpro', Icon: Github },
+  { name: 'Email', href: 'mailto:muhammadshihab17@gmail.com', Icon: Mail },
 ];
 
 

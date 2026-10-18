@@ -59,14 +59,14 @@ interface SocialLink {
 const SOCIAL_LINKS: SocialLink[] = [
   {
     name: 'Facebook',
-    href: 'https://facebook.com/',
+    href: 'https://www.facebook.com/muhammadshihabjht',
     from: '#1877F2',
     to: '#0F5FCB',
     Icon: FacebookIcon,
   },
   {
     name: 'Telegram',
-    href: 'https://t.me/',
+    href: 'https://t.me/shihabxai',
     from: '#26A5E4',
     to: '#1686C4',
     Icon: TelegramIcon,

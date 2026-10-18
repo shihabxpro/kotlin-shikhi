@@ -4,7 +4,7 @@
  */
 
 import { Sparkles } from 'lucide-react';
-import profileImage from '../assets/profile.jpg';
+import profileImage from '../assets/profile.png';
 import SocialLinks from './SocialLinks';
 
 interface AboutHeroProps {

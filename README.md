@@ -16,6 +16,48 @@
 
 ---
 
+## স্ক্রিনশট
+
+<p align="center">
+  <strong>হোম পেজ</strong><br />
+  <img src="docs/screenshots/home.webp" alt="Kotlin শিখি — হোম পেজ" width="100%" />
+</p>
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <strong>মডিউল ও লেসন তালিকা</strong><br />
+      <img src="docs/screenshots/module.webp" alt="মডিউল ও লেসন তালিকা" width="100%" />
+    </td>
+    <td width="50%" valign="top">
+      <strong>লেসন — কোড ও আউটপুট</strong><br />
+      <img src="docs/screenshots/lesson.webp" alt="লেসন পেজ — কোড উদাহরণ ও আউটপুট" width="100%" />
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <strong>মোবাইল ভিউ</strong>
+</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/screenshots/home-mobile.webp" alt="মোবাইলে হোম পেজ" width="280" />
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/screenshots/lesson-mobile.webp" alt="মোবাইলে লেসন পেজ" width="280" />
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <strong>নির্মাতার সম্পর্কে</strong><br />
+  <img src="docs/screenshots/about.webp" alt="নির্মাতার সম্পর্কে পেজ" width="100%" />
+</p>
+
+---
+
 ## এই প্রজেক্ট কী
 
 **Kotlin শিখি** হলো একটি সম্পূর্ণ বাংলা ভাষার ইন্টারঅ্যাকটিভ লার্নিং অ্যাপ, যেখানে Kotlin প্রোগ্রামিং একদম শুরু থেকে ধাপে ধাপে শেখানো হয়। প্রতিটি লেসন ছোট ছোট ধারণায় ভাগ করা — পড়ুন, কোড উদাহরণ বুঝুন, তারপর কুইজ ও প্র্যাকটিস টাস্ক দিয়ে নিজের বোঝাপড়া যাচাই করুন। কোনো পূর্ব অভিজ্ঞতার দরকার নেই।

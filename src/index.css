@@ -91,40 +91,4 @@
   }
 }
 
-/* Hero floating code symbols */
-@keyframes hero-float {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: var(--hero-symbol-opacity, 0.14);
-  }
-  50% {
-    transform: translateY(-12px) rotate(-4deg);
-    opacity: calc(var(--hero-symbol-opacity, 0.14) + 0.05);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: var(--hero-symbol-opacity, 0.14);
-  }
-}
-
-.hero-symbol {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  line-height: 1;
-  opacity: var(--hero-symbol-opacity, 0.14);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-symbol {
-    animation-name: hero-float;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    will-change: transform, opacity;
-  }
-}
-
 

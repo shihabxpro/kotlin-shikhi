@@ -4,34 +4,16 @@
  */
 
 import { ArrowRight, Check, Languages, Map, ShieldCheck } from 'lucide-react';
-import type { CSSProperties } from 'react';
 import { getLessonContent } from '../content/lessons';
 import { useReadProgress } from '../hooks/useReadProgress';
 import { getLastLesson } from '../utils/progress';
+import RandomMotionVideo from './RandomMotionVideo';
 
 interface HeroProps {
   onStartLearning?: () => void;
   onViewRoadmap?: () => void;
   onOpenLesson?: (moduleId: number, lessonId: number) => void;
 }
-
-interface FloatingSymbol {
-  char: string;
-  style: CSSProperties;
-}
-
-const FLOATING_SYMBOLS: FloatingSymbol[] = [
-  { char: '{', style: { top: '-6%', right: '6%', fontSize: '2.1rem', color: 'var(--color-terracotta, #B85C3E)', '--hero-symbol-opacity': '0.26', animationDelay: '0s', animationDuration: '7s' } as CSSProperties },
-  { char: '}', style: { top: '46%', right: '8%', fontSize: '1.9rem', color: 'var(--color-code-fn, #2B5B84)', '--hero-symbol-opacity': '0.24', animationDelay: '1.1s', animationDuration: '8.5s' } as CSSProperties },
-  { char: 'val', style: { top: '33%', right: '3%', fontSize: '1.05rem', color: 'var(--color-code-string, #2D6A4F)', '--hero-symbol-opacity': '0.42', animationDelay: '0.9s', animationDuration: '8s' } as CSSProperties },
-  { char: 'fun', style: { top: '4%', right: '30%', fontSize: '1.05rem', color: 'var(--color-code-builtin, #9C4221)', '--hero-symbol-opacity': '0.34', animationDelay: '2.3s', animationDuration: '9.5s' } as CSSProperties },
-  { char: '<', style: { bottom: '0%', right: '14%', fontSize: '1.5rem', color: 'var(--color-terracotta, #B85C3E)', '--hero-symbol-opacity': '0.24', animationDelay: '1.7s', animationDuration: '7.5s' } as CSSProperties },
-  { char: '>', style: { top: '40%', right: '30%', fontSize: '1.35rem', color: 'var(--color-code-fn, #2B5B84)', '--hero-symbol-opacity': '0.22', animationDelay: '0.5s', animationDuration: '9s' } as CSSProperties },
-  { char: '( )', style: { top: '2%', right: '50%', fontSize: '1.15rem', color: 'var(--color-muted-light, #8A7F72)', '--hero-symbol-opacity': '0.22', animationDelay: '2s', animationDuration: '7.3s' } as CSSProperties },
-  { char: ';', style: { bottom: '6%', right: '34%', fontSize: '1.5rem', color: 'var(--color-code-string, #2D6A4F)', '--hero-symbol-opacity': '0.24', animationDelay: '1.4s', animationDuration: '8.2s' } as CSSProperties },
-  { char: 'if', style: { top: '20%', right: '44%', fontSize: '1.25rem', color: 'var(--color-code-string, #2D6A4F)', '--hero-symbol-opacity': '0.3', animationDelay: '3s', animationDuration: '8.8s' } as CSSProperties },
-  { char: 'null', style: { bottom: '24%', right: '22%', fontSize: '1rem', color: 'var(--color-code-builtin, #9C4221)', '--hero-symbol-opacity': '0.34', animationDelay: '1.9s', animationDuration: '7.8s' } as CSSProperties },
-];
 
 export default function Hero({
   onStartLearning,
@@ -74,6 +56,11 @@ export default function Hero({
 
   return (
     <section className="relative">
+      {/* Ambient random-motion field (Kotlin + Bengali tokens) behind the hero copy */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <RandomMotionVideo />
+      </div>
+
       {/* Badge */}
       <div className="mb-4 relative z-10">
         <span
@@ -101,19 +88,8 @@ export default function Hero({
         </span>
       </div>
 
-      {/* Headline with floating code symbols + 'গল্পটা' in terracotta + hand-drawn wavy underline */}
+      {/* Headline with 'গল্পটা' in terracotta + hand-drawn wavy underline */}
       <div className="relative mb-5">
-        {FLOATING_SYMBOLS.map((symbol, index) => (
-          <span
-            key={index}
-            className="hero-symbol"
-            aria-hidden="true"
-            style={symbol.style}
-          >
-            {symbol.char}
-          </span>
-        ))}
-
         <h1
           className="relative z-10 text-3xl sm:text-5xl text-[var(--color-ink,#1C1A18)]"
           style={{
@@ -164,7 +140,7 @@ export default function Hero({
       </p>
 
       {/* CTA with exact --hero-gap bottom spacing to progress dashboard */}
-      <div style={{ marginBottom: 'var(--hero-gap)' }}>
+      <div className="relative z-10" style={{ marginBottom: 'var(--hero-gap)' }}>
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full">
           <button
             type="button"

@@ -23,25 +23,25 @@
 <table align="center">
   <tr>
     <td align="center" width="33%">
-      <img src="docs/screenshots/home.webp" alt="হোম পেজ" width="240" /><br />
+      <img src="docs/screenshots/home.webp" alt="হোম পেজ" width="100%" /><br />
       <sub>হোম পেজ</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/modules.webp" alt="সকল মডিউল" width="240" /><br />
+      <img src="docs/screenshots/modules.webp" alt="সকল মডিউল" width="100%" /><br />
       <sub>সকল মডিউল</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/module-lessons.webp" alt="মডিউলের লেসন তালিকা" width="240" /><br />
+      <img src="docs/screenshots/module-lessons.webp" alt="মডিউলের লেসন তালিকা" width="100%" /><br />
       <sub>লেসন তালিকা</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/screenshots/lesson.webp" alt="লেসন পেজ" width="240" /><br />
+      <img src="docs/screenshots/lesson.webp" alt="লেসন পেজ" width="100%" /><br />
       <sub>লেসন পেজ</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/screenshots/about.webp" alt="পরিচিতি পেজ" width="240" /><br />
+      <img src="docs/screenshots/about.webp" alt="পরিচিতি পেজ" width="100%" /><br />
       <sub>পরিচিতি পেজ</sub>
     </td>
     <td align="center" width="33%"></td>

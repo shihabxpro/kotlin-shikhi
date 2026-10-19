@@ -18,43 +18,35 @@
 
 ## স্ক্রিনশট
 
-<p align="center">
-  <strong>হোম পেজ</strong><br />
-  <img src="docs/screenshots/home.webp" alt="Kotlin শিখি — হোম পেজ" width="100%" />
-</p>
+<p align="center"><em>সম্পূর্ণ অভিজ্ঞতা — মোবাইল ভিউ</em></p>
 
-<table>
+<table align="center">
   <tr>
-    <td width="50%" valign="top">
-      <strong>মডিউল ও লেসন তালিকা</strong><br />
-      <img src="docs/screenshots/module.webp" alt="মডিউল ও লেসন তালিকা" width="100%" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/home.webp" alt="হোম পেজ" width="240" /><br />
+      <sub>হোম পেজ</sub>
     </td>
-    <td width="50%" valign="top">
-      <strong>লেসন — কোড ও আউটপুট</strong><br />
-      <img src="docs/screenshots/lesson.webp" alt="লেসন পেজ — কোড উদাহরণ ও আউটপুট" width="100%" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/modules.webp" alt="সকল মডিউল" width="240" /><br />
+      <sub>সকল মডিউল</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/screenshots/module-lessons.webp" alt="মডিউলের লেসন তালিকা" width="240" /><br />
+      <sub>লেসন তালিকা</sub>
     </td>
   </tr>
-</table>
-
-<p align="center">
-  <strong>মোবাইল ভিউ</strong>
-</p>
-
-<table>
   <tr>
-    <td width="50%" align="center" valign="top">
-      <img src="docs/screenshots/home-mobile.webp" alt="মোবাইলে হোম পেজ" width="280" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/lesson.webp" alt="লেসন পেজ" width="240" /><br />
+      <sub>লেসন পেজ</sub>
     </td>
-    <td width="50%" align="center" valign="top">
-      <img src="docs/screenshots/lesson-mobile.webp" alt="মোবাইলে লেসন পেজ" width="280" />
+    <td align="center" width="33%">
+      <img src="docs/screenshots/about.webp" alt="পরিচিতি পেজ" width="240" /><br />
+      <sub>পরিচিতি পেজ</sub>
     </td>
+    <td align="center" width="33%"></td>
   </tr>
 </table>
-
-<p align="center">
-  <strong>নির্মাতার সম্পর্কে</strong><br />
-  <img src="docs/screenshots/about.webp" alt="নির্মাতার সম্পর্কে পেজ" width="100%" />
-</p>
 
 ---
 

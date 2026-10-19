@@ -25,7 +25,7 @@ const lesson: Lesson = {
     },
     {
       type: 'paragraph',
-      text: 'Kotlin-এর সাধারণ Data Type',
+      text: '**Kotlin-এর সাধারণ Data Type**',
     },
     {
       type: 'paragraph',
@@ -74,9 +74,9 @@ const lesson: Lesson = {
     {
       type: 'list',
       items: [
-        '**কোটেশন থাকলে লেখা:** `20` সংখ্যা (`Int`), কিন্তু `"20"` লেখা (`String`), যদিও দেখতে এক।',
-        '**সংখ্যার শেষের অক্ষর টাইপ বদলায়:** `20` হলো `Int`, আর `20L` হলো `Long`। `2.5` হলো `Double`, আর `2.5f` হলো `Float`।',
-        '**দশমিক থাকলেই Double:** `99` হলো `Int`, কিন্তু `99.0` হলো `Double`।',
+        '**কোটেশন থাকলে লেখা:**\n`20` সংখ্যা (`Int`), কিন্তু `"20"` লেখা (`String`), যদিও দেখতে এক।',
+        '**সংখ্যার শেষের অক্ষর টাইপ বদলায়:**\n`20` হলো `Int`, আর `20L` হলো `Long`। `2.5` হলো `Double`, আর `2.5f` হলো `Float`।',
+        '**দশমিক থাকলেই Double:**\n`99` হলো `Int`, কিন্তু `99.0` হলো `Double`।',
       ],
     },
     {
@@ -186,7 +186,7 @@ const lesson: Lesson = {
     },
     {
       type: 'paragraph',
-      text: '**`Char` ও `String` গুলিয়ে ফেলা:**',
+      text: '`Char` ও `String` **গুলিয়ে ফেলা:**',
     },
     {
       type: 'paragraph',

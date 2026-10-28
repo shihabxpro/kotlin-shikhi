@@ -13,16 +13,18 @@ const lesson: Lesson = {
     },
     {
       type: 'paragraph',
-      text: '`Boolean`-এর মাত্র দুটি মান থাকতে পারে — `true` (সত্য) অথবা `false` (মিথ্যা)। এর বাইরে আর কিছুই না।',
+      text: '`Boolean`-এর মাত্র দুটি মান থাকতে পারে — `true` (সত্য) অথবা `false` (মিথ্যা)। এর বাইরে আর কোনো মান নেই।',
     },
     {
       type: 'code',
       language: 'kotlin',
-      code: `val isRaining = true
-val isSunny = false
+      code: `fun main() {
+    val isRaining = true
+    val isSunny = false
 
-println(isRaining)
-println(isSunny)`,
+    println(isRaining)
+    println(isSunny)
+}`,
     },
     {
       type: 'paragraph',
@@ -35,7 +37,7 @@ false`,
     },
     {
       type: 'paragraph',
-      text: 'লক্ষ করো, `true` আর `false` ছোট হাতের অক্ষরে লেখা হয়। এগুলো Kotlin-এর নিজের শব্দ, তাই নামের মতো জায়গায় ব্যবহার করা যায় না।',
+      text: 'লক্ষ করুন, `true` আর `false` সবসময় ছোট হাতের অক্ষরে লেখা হয়। এগুলো Kotlin-এর নিজস্ব শব্দ, তাই ভেরিয়েবলের নাম হিসেবে ব্যবহার করা যায় না।',
     },
     {
       type: 'heading',
@@ -59,10 +61,12 @@ false`,
     {
       type: 'code',
       language: 'kotlin',
-      code: `println(5 > 3)
-println(5 < 3)
-println(5 == 5)
-println(5 != 5)`,
+      code: `fun main() {
+    println(5 > 3)
+    println(5 < 3)
+    println(5 == 5)
+    println(5 != 5)
+}`,
     },
     {
       type: 'paragraph',
@@ -77,11 +81,11 @@ false`,
     },
     {
       type: 'paragraph',
-      text: '`5 > 3` সত্য, তাই `true`। `5 < 3` মিথ্যা, তাই `false`। তুলনার ফলাফল সবসময় `Boolean`।',
+      text: '`5 > 3` সত্য, তাই `true`। `5 < 3` মিথ্যা, তাই `false`। `5 == 5` সত্য, আর `5 != 5` মিথ্যা। অর্থাৎ তুলনার ফলাফল সবসময় `Boolean`।',
     },
     {
       type: 'note',
-      text: '**মনে রাখবে**: সমান কি না বোঝাতে দুইটি সমান চিহ্ন (`==`) ব্যবহার করতে হয়। একটি `=` মানে হলো মান রাখা, আর `==` মানে তুলনা করা।',
+      text: '**মনে রাখুন:** সমান কি না বোঝাতে দুটি সমান চিহ্ন (`==`) ব্যবহার করতে হয়। একটি `=` মানে মান রাখা, আর `==` মানে তুলনা করা।',
     },
     {
       type: 'heading',
@@ -94,7 +98,7 @@ false`,
     {
       type: 'list',
       items: [
-        '`&&` — দুইটাই সত্য হলে সত্য (AND)',
+        '`&&` — দুটোই সত্য হলে সত্য (AND)',
         '`||` — যেকোনো একটি সত্য হলেই সত্য (OR)',
         '`!` — সত্যকে মিথ্যা, মিথ্যাকে সত্য করে (NOT)',
       ],
@@ -102,12 +106,14 @@ false`,
     {
       type: 'code',
       language: 'kotlin',
-      code: `val isAdult = true
-val hasTicket = false
+      code: `fun main() {
+    val isAdult = true
+    val hasTicket = false
 
-println(isAdult && hasTicket)
-println(isAdult || hasTicket)
-println(!isAdult)`,
+    println(isAdult && hasTicket)
+    println(isAdult || hasTicket)
+    println(!isAdult)
+}`,
     },
     {
       type: 'paragraph',
@@ -121,7 +127,7 @@ false`,
     },
     {
       type: 'paragraph',
-      text: '`isAdult && hasTicket` — দুটোই সত্য হতে হয়, কিন্তু `hasTicket` মিথ্যা, তাই ফল `false`। `isAdult || hasTicket` — যেকোনো একটি সত্য হলেই চলবে, `isAdult` সত্য, তাই ফল `true`। `!isAdult` — সত্যের উল্টো, তাই `false`।',
+      text: '`isAdult && hasTicket` — দুটোই সত্য হতে হয়, কিন্তু `hasTicket` মিথ্যা, তাই ফল `false`। `isAdult || hasTicket` — যেকোনো একটি সত্য হলেই চলে, `isAdult` সত্য, তাই ফল `true`। `!isAdult` — সত্যের উল্টো, তাই `false`।',
     },
     {
       type: 'heading',
@@ -131,15 +137,15 @@ false`,
       type: 'list',
       items: [
         '**তুলনায় একটি `=` দেওয়া:** `5 = 5` ভুল। তুলনার জন্য `5 == 5` লিখতে হবে।',
-        '**`true`/`false` বড় হাতে লেখা:** `True` বা `False` ভুল। সবসময় ছোট হাতে `true`/`false`।',
-        '**`&` বা `|` একটি লেখা:** Boolean হিসাবে `&&` ও `||` দুটি করে চিহ্ন লাগে।',
-        '**কোটা দিয়ে লেখা:** `"true"` হলো String, আর `true` হলো Boolean — দুটো আলাদা।',
+        '**`true`/`false` বড় হাতে লেখা:** `True` বা `False` ভুল। সবসময় ছোট হাতে `true`/`false` লিখুন।',
+        '**`&` বা `|` একটি লেখা:** Boolean-এর জন্য `&&` ও `||` দুটি করে চিহ্ন লাগে।',
+        '**কোটেশন দিয়ে লেখা:** `"true"` হলো `String`, আর `true` হলো `Boolean` — দুটি আলাদা।',
       ],
     },
     {
       type: 'task',
       title: 'অনুশীলন: সত্য না মিথ্যা',
-      text: '১. দুটি Boolean ভেরিয়েবল বানান: `isStudent = true`, `hasLibraryCard = false`।\n২. `&&`, `||`, `!` ব্যবহার করে তিনটি ফল প্রিন্ট করুন এবং নিজের অনুমান মিলিয়ে নিন।\n৩. `10 > 5`, `10 < 5`, `10 == 10`, `10 != 10` — চারটি তুলনা প্রিন্ট করুন।\n৪. `val myAge = 20` ধরে `myAge >= 18` প্রিন্ট করে দেখুন — প্রাপ্তবয়স্ক কি না বোঝা যায়।',
+      text: 'নিজের কোড `fun main()`-এর ভেতরে লিখে চালান।\n১. দুটি Boolean ভেরিয়েবল বানান: `isStudent = true`, `hasLibraryCard = false`।\n২. `&&`, `||`, `!` ব্যবহার করে তিনটি ফল প্রিন্ট করুন এবং নিজের অনুমান মিলিয়ে নিন।\n৩. `10 > 5`, `10 < 5`, `10 == 10`, `10 != 10` — চারটি তুলনা প্রিন্ট করুন।\n৪. `val myAge = 20` ধরে `myAge >= 18` প্রিন্ট করে দেখুন — প্রাপ্তবয়স্ক কি না বোঝা যায়।',
       hint: '`println(isStudent && hasLibraryCard)` দিয়ে শুরু করুন। প্রতিটি ফলাফল আগে কাগজে অনুমান করে তারপর চালান।',
     },
     {
@@ -147,7 +153,7 @@ false`,
       questions: [
         {
           question: '`Boolean`-এর সম্ভাব্য মান কয়টি?',
-          options: ['শুধু `true`', '`true` আর `false` — এই দুটি', 'যেকোনো সংখ্যা', 'শুধু `0` আর `1` লিখা যায়'],
+          options: ['শুধু `true`', '`true` আর `false` — এই দুটি', 'যেকোনো সংখ্যা', 'শুধু `0` আর `1` লেখা যায়'],
           answerIndex: 1,
           explanation: '`Boolean`-এর মাত্র দুটি মান থাকে — `true` অথবা `false`।',
         },

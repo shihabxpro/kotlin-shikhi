@@ -9,6 +9,7 @@ export type Block =
   | { type: 'heading'; text: string; icon?: 'phone' | 'server' | 'devices' }
   | { type: 'paragraph'; text: string }
   | { type: 'list'; items: string[]; ordered?: boolean }
+  | { type: 'table'; headers: string[]; rows: string[][] }
   | { type: 'code'; code: string; language?: string; caption?: string }
   | { type: 'note'; text: string }
   | { type: 'task'; title?: string; text: string; hint?: string }

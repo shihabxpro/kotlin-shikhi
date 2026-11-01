@@ -113,6 +113,49 @@ function ListBlock({ block }: { block: Extract<Block, { type: 'list' }> }) {
   );
 }
 
+function TableBlock({ block }: { block: Extract<Block, { type: 'table' }> }) {
+  return (
+    <div
+      className="w-full max-w-full overflow-x-auto overscroll-x-contain rounded-xl border border-[var(--color-border,#DED4C5)] [scrollbar-width:thin] [-webkit-overflow-scrolling:touch]"
+      role="region"
+      aria-label="তুলনা সারণি"
+      tabIndex={0}
+    >
+      <table className="w-full min-w-[560px] border-collapse text-left text-[15px] sm:text-[16px] leading-[1.65] text-[var(--color-ink,#1C1A18)]">
+        <thead>
+          <tr className="bg-[rgba(184,92,62,0.07)]">
+            {block.headers.map((header, idx) => (
+              <th
+                key={idx}
+                className="px-3.5 py-2.5 font-semibold text-[var(--color-ink,#1C1A18)] border-b border-[var(--color-border,#DED4C5)] whitespace-nowrap"
+              >
+                {formatInlineText(header)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {block.rows.map((row, rowIdx) => (
+            <tr
+              key={rowIdx}
+              className={rowIdx % 2 === 1 ? 'bg-[rgba(222,212,197,0.14)]' : undefined}
+            >
+              {row.map((cell, cellIdx) => (
+                <td
+                  key={cellIdx}
+                  className="px-3.5 py-2.5 align-top border-b border-[var(--color-divider,#E6DDD0)] last:border-b-0 break-words"
+                >
+                  {formatInlineText(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function highlightKotlin(code: string): React.ReactNode {
   const tokenRegex = /(?:"(?:[^"\\]|\\.)*"|"""[\s\S]*?"""|\/\/.*|\/\*[\s\S]*?\*\/|\b(?:fun|val|var|class|object|interface|package|import|return|if|else|when|for|while|do|try|catch|finally|throw|true|false|null|is|in|as|override|private|public|protected|internal|companion|data|sealed|enum|open|abstract)\b|\b[a-zA-Z_][a-zA-Z0-9_]*(?=\s*\()|\b\d+(?:\.\d+)?\b)/g;
 
@@ -462,6 +505,8 @@ export default function LessonBlocks({ blocks }: LessonBlocksProps) {
             return <ParagraphBlock key={index} block={block} />;
           case 'list':
             return <ListBlock key={index} block={block} />;
+          case 'table':
+            return <TableBlock key={index} block={block} />;
           case 'code':
             return <CodeBlockItem key={index} block={block} />;
           case 'note':
